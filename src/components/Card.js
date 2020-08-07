@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Rounds from './Rounds';
 
 const cardStyle = {
     border: "solid",
@@ -11,13 +12,30 @@ const cardStyle = {
 
 
 
-export default function Card({card, board, cellIndexes}) {
+export default function Card({card, board, cellIndexes, p2}) {
    
     const [foundCardIndexes, setFoundCardIndexes] = useState([]);
 
-    const placeCard = () =>{
+
+
+    function placeToken(card){
+        card.target.textContent="P1- "+card.target.textContent+" -P1";
+        console.log("---------Switch-----------")
+        //card.setAttribute("style", "background-color: green")
+    }
+
+
+    const placeCard = () => {
         console.log("Clicked card:")
         console.log(card)
+
+        for(let i = 0; i < board.length; i++){
+            let card = document.querySelector("#cell" + i);
+            card.removeAttribute("style");
+            card.removeEventListener("click", placeToken);    //lehet tryba kell rakni
+            card.setAttribute("style", "border: solid");
+        }
+
 
         let i = 0;
         let indexArray = [];
@@ -26,12 +44,20 @@ export default function Card({card, board, cellIndexes}) {
         indexArray[1] += 1
         setFoundCardIndexes(indexArray)
 
-        let id = "#cell" + indexArray[0];
         try{
-            document.querySelector(id).setAttribute("style","background-color: red")
+            let id = "#cell" + indexArray[0];
+            let card = document.querySelector(id);
+
+            card.setAttribute("style","background-color: red")
+
+            card.addEventListener("click", (e) => placeToken(e))
 
             id = "#cell" + indexArray[1];
-            document.querySelector(id).setAttribute("style","background-color: red")
+            card = document.querySelector(id);
+            card.setAttribute("style","background-color: red")
+
+            card.addEventListener("click", (e) => placeToken(e))
+
 
             //send cell indexes back to Rounds.js to compare later the click
             cellIndexes(indexArray)

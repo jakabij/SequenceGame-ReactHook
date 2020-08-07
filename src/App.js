@@ -13,6 +13,12 @@ import PlayerNames from './components/PlayerNames';
 
 function App() {
   // const match = useRoutes(routes);
+
+  const player1Cards = [
+    "RRA", "asd2", "as3", "asd4", "asd5", "asd6"
+  ]
+
+
   return (
     <Router>
       <div className="App">
@@ -22,7 +28,7 @@ function App() {
         </Route>
 
         <Route path="/newGame">
-          <Rounds/>
+          <Rounds player={player1Cards}/>
         </Route>
       </div>
     </Router>

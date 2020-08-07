@@ -3,7 +3,9 @@ import {useLocation} from "react-router-dom";
 import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
 import Card from "./Card";
 
-const Rounds = (props) => {
+import PlayerNames from "./PlayerNames"
+
+const Rounds = ({player}) => {
 
     const boardCardStyle = {
         border: "solid",
@@ -73,7 +75,7 @@ const Rounds = (props) => {
     const [selectedCellsIndexes, setSelectedCellsIndexes] = useState([]);
 
     const selectedIndexes = (indexes) => {
-        setSelectedCellsIndexes(indexes);
+        setSelectedCellsIndexes(indexes)
     }
 
     const spreadCards = (playerDeck) => {
@@ -103,16 +105,21 @@ const Rounds = (props) => {
     
     const location = useLocation()
 
-    const showPlayerCards = () => {
+    const showPlayerCards = (playerCards) => {
         return(
             <div style={{height: "300px"}}>
                 {   console.log("Player1 cards in a nutshell:"),
-                    player1Cards.map( element => <Card card={element} board={gameBoard} cellIndexes={selectedIndexes} />)
+                    playerCards.map( element => <Card card={element} board={gameBoard} //player1Cards.map volt
+                        cellIndexes={selectedIndexes} p2={player2Cards} />)
                 }
                 {
-                     console.log("Kapott indexek pöcsfej"),
+                     console.log("Got indexes from Card"), //ToDelete
                      console.log(selectedCellsIndexes)
                 }
+                {
+                    //itt eltűntetni az előző cardot és megjeleníteni a következőt
+                }
+                
             </div>
         )
     }
@@ -245,12 +252,9 @@ const Rounds = (props) => {
           </table>
           <div>
             {
-                console.log("Dealt cards start from player1"),
-                console.log(player1Cards),
-                console.log(player2Cards),
-                console.log(player3Cards),
-
-                showPlayerCards()
+                console.log("---------"),
+                console.log(player),
+                showPlayerCards(player)
             }
           </div>
         </div>
